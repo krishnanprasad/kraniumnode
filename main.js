@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
     port: '3306',
     user: 'tvs',
     password: 'kranium@tvs',
-    database: 'global_ev'
+    database: 'global_tvs'
 });
 
 // const connection = mysql.createConnection({
@@ -23,6 +23,7 @@ connection.connect((err) => {
 });
 
 exports.signIn = (req, res) => {
+    console.log('signin');
     const userName = req.body.userName;
     const password = req.body.password;
     let sqlLog = `CALL api_login('${userName}', '${password}')`;
@@ -102,3 +103,187 @@ exports.getData = (req, res) => {
 //   res.send('check')
 // })
 
+
+// Mobile services 
+
+exports.mobileSignIn = (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    const locationid = req.body.locationid;
+
+    let sqlLog = `CALL mob_signin('${username}', '${password}', '${locationid}')`;
+    connection.query(sqlLog, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).send(error);
+        }
+        if (results) {
+            console.log(results);
+            res.status(200).send({
+                outData: results,
+                statusCode: 1,
+                msg: 'success'
+            });
+        }
+    });
+}
+
+exports.getLocation = (req, res) => {
+
+    let sqlLog = `CALL mob_getlocation()`;
+    connection.query(sqlLog, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).send(error);
+        }
+        if (results) {
+            console.log(results);
+            res.status(200).send({
+                outData: results,
+                statusCode: 1,
+                msg: 'success'
+            });
+        }
+    });
+}
+
+exports.getAppointments = (req, res) => {
+    const currentdate = req.body.date;
+    const locid = req.body.locid;
+
+    let sqlLog = `CALL mob_op('${currentdate}', '${locid}')`;
+    connection.query(sqlLog, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).send(error);
+        }
+        if (results) {
+            console.log(results);
+            res.status(200).send({
+                outData: results,
+                statusCode: 1,
+                msg: 'success'
+            });
+        }
+    });
+}
+
+exports.getEncounterDetails = (req, res) => {
+    const encounterid = req.body.encounterid;
+
+    let sqlLog = `CALL mob_encounter('${encounterid}')`;
+    connection.query(sqlLog, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).send(error);
+        }
+        if (results) {
+            console.log(results);
+            res.status(200).send({
+                outData: results,
+                statusCode: 1,
+                msg: 'success'
+            });
+        }
+    });
+}
+
+exports.servicesUsedForEncounter = (req, res) => {
+    const encounterid = req.body.encounterid;
+
+    let sqlLog = `CALL mob_services('${encounterid}')`;
+    connection.query(sqlLog, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).send(error);
+        }
+        if (results) {
+            console.log(results);
+            res.status(200).send({
+                outData: results,
+                statusCode: 1,
+                msg: 'success'
+            });
+        }
+    });
+}
+
+exports.getConsultationFee = (req, res) => {
+    const encounterid = req.body.encounterid;
+
+    let sqlLog = `CALL mob_consultation_fee('${encounterid}')`;
+    connection.query(sqlLog, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).send(error);
+        }
+        if (results) {
+            console.log(results);
+            res.status(200).send({
+                outData: results,
+                statusCode: 1,
+                msg: 'success'
+            });
+        }
+    });
+}
+
+exports.serviceConfirmation = (req, res) => {
+
+    let sqlLog = `CALL mob_add_services()`;
+    connection.query(sqlLog, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).send(error);
+        }
+        if (results) {
+            console.log(results);
+            res.status(200).send({
+                outData: results,
+                statusCode: 1,
+                msg: 'success'
+            });
+        }
+    });
+}
+
+exports.searchServiceList = (req, res) => {
+    const servicename = req.body.servicename;
+
+    let sqlLog = `CALL mob_services('${servicename}')`;
+    connection.query(sqlLog, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).send(error);
+        }
+        if (results) {
+            console.log(results);
+            res.status(200).send({
+                outData: results,
+                statusCode: 1,
+                msg: 'success'
+            });
+        }
+    });
+}
+
+exports.searchPatient = (req, res) => {
+    const username = req.body.username;
+    const phonenumber = req.body.phonenumber;
+
+    let sqlLog = `CALL mob_searchpatient('${username}','${phonenumber}')`;
+    connection.query(sqlLog, (error, results, fields) => {
+        if (error) {
+            console.log(error);
+            return res.status(400).send(error);
+        }
+        if (results) {
+            console.log(results);
+            res.status(200).send({
+                outData: results,
+                statusCode: 1,
+                msg: 'success'
+            });
+        }
+    });
+}

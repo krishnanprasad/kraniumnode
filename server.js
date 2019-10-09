@@ -37,6 +37,24 @@ app.get('/resolve', main.getPatient);
 
 app.get('/getData', main.getData);
 
+app.post('/mobilesignIn', main.mobileSignIn);
+
+app.get('/getlocation', main.getLocation);
+
+app.get('/getappointments', main.getAppointments);
+
+app.get('/getencounterdetails', main.getEncounterDetails);
+
+app.get('/servicesencounter', main.servicesUsedForEncounter);
+
+app.get('/getconsultationfee', main.getConsultationFee);
+
+app.post('/serviceconfirmation', main.serviceConfirmation);
+
+app.get('/searchservicelist', main.searchServiceList);
+
+app.get('/searchpatient', main.searchPatient);
+
 http.createServer(app).listen(port, () => {
     console.log(`express listening on ${port}`);
 });  
