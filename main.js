@@ -118,14 +118,33 @@ exports.mobileSignIn = (req, res) => {
             return res.status(400).send(error);
         }
         if (results) {
-            console.log(results);
-            res.status(200).send({
-                outData: results,
-                statusCode: 1,
-                msg: 'success'
-            });
+
+            var checkLogin = results[0][0];
+            loginUserDetails = JSON.stringify(checkLogin);
+            if(isEmpty(loginUserDetails)){
+                res.status(404).send({
+                    outData: results,
+                    statusCode: 2,
+                    msg: 'Invalid Credential'
+                });
+            } else {
+                res.status(200).send({
+                    outData: results,
+                    statusCode: 1,
+                    msg: 'success'
+                });
+            }
         }
     });
+}
+
+function isEmpty(obj) {
+    console.log(obj);
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
 }
 
 exports.getLocation = (req, res) => {

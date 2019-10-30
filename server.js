@@ -12,7 +12,7 @@
 
 
     const app = express();
-    const port = 8080;
+    const port = 6000;
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
